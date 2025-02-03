@@ -3,15 +3,23 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
+let isConnected;
+
 const connectDB = async () => {
+  if (isConnected) {
+    console.log('Already connected to MongoDB');
+    return;
+  }
+
   try {
     await mongoose.connect(process.env.MONGO_URI, {
       dbName: 'Wedding-Comments',
     });
-    console.log('MongoDB connected successfully');
+    isConnected = true;
+    console.log('MongoDB connected');
   } catch (err) {
-    console.error(`MongoDB connection failed: ${err.message}`);
-    process.exit(1);
+    console.error('MongoDB connection error:', err.message);
+    throw err;
   }
 };
 
