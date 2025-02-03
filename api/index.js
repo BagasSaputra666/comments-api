@@ -9,7 +9,11 @@ app.use(express.json());
 app.use(cors());
 
 // Koneksi ke database hanya sekali
-connectDB();
+console.log('Connecting to DB...');
+await connectDB();
+console.log('Connected to DB');
+console.log('Fetching comments...');
+console.log('Comments fetched');
 
 // Endpoint GET Comments
 app.get('/', async (req, res) => {
